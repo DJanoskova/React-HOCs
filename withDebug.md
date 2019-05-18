@@ -1,7 +1,9 @@
 ### Component
 
+```
 const DebuggedComponent = withDebug(Component, 'MyComponent');
 export default DebuggedComponent
+```
 
 ### Console
 
