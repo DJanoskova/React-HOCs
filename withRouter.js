@@ -1,22 +1,13 @@
 import { useMemo } from 'react';
 import useReactRouter from 'use-react-router';
+import queryString from 'query-string';
 
 export function useRouter() {
   const routes = useReactRouter();
   const { location, history } = routes;
 
   const query = useMemo(() => {
-    const params = {};
-    const urlParams = new URLSearchParams(location.search);
-    if (!urlParams.toString()) return {};
-
-    const entries = urlParams.entries();
-    for (const pair of entries) {
-      const [key, value] = pair;
-      params[key] = value;
-    }
-
-    return params;
+    return queryString.parse(location.search);
   }, [location.search]);
 
   const handlePush = (url, { query }) => {
