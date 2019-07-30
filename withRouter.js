@@ -10,20 +10,23 @@ export function useRouter() {
     return queryString.parse(location.search);
   }, [location.search]);
 
-  const handlePush = (url, { query }) => {
+  const handlePush = (url, params = {}) => {
     const urlParams = new URLSearchParams();
-    const queryKeys = Object.keys(query);
 
     let finalUrl = url;
 
-    if (queryKeys.length) {
-      queryKeys.forEach(key => {
-        const value = query[key];
-        if (value) urlParams.append(key, value);
-      });
+    if (params.query) {
+      const queryKeys = Object.keys(params.query);
 
-      const stringParams = urlParams.toString();
-      if (stringParams) finalUrl += `?${stringParams}`;
+      if (queryKeys.length) {
+        queryKeys.forEach(key => {
+          const value = query[key];
+          if (value) urlParams.append(key, value);
+        });
+
+        const stringParams = urlParams.toString();
+        if (stringParams) finalUrl += `?${stringParams}`;
+      }
     }
 
     history.push(finalUrl);
